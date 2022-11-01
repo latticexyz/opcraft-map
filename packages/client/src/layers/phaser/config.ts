@@ -11,15 +11,14 @@ import {
   TileAnimations as OverworldTileAnimations,
 } from "../phaser/assets/tilesets/overworldTileset";
 import overworldTileset from "./assets/tilesets/overworld-tileset.png";
-import mountainTileset from "./assets/tilesets/mountain-tileset.png";
 const ANIMATION_INTERVAL = 200;
 
 export const phaserConfig = {
   sceneConfig: {
     [Scenes.Main]: defineSceneConfig({
       assets: {
+        // TODO: we need to create a tileset from the OPCraft textures and load it here
         [Assets.OverworldTileset]: { type: AssetType.Image, key: Assets.OverworldTileset, path: overworldTileset },
-        [Assets.MountainTileset]: { type: AssetType.Image, key: Assets.MountainTileset, path: mountainTileset },
         [Assets.MainAtlas]: {
           type: AssetType.MultiAtlas,
           key: Assets.MainAtlas,
@@ -50,34 +49,6 @@ export const phaserConfig = {
         [Sprites.Settlement]: {
           assetKey: Assets.MainAtlas,
           frame: "sprites/resources/crystal.png",
-        },
-        [Sprites.Gold]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/resources/gold.png",
-        },
-        [Sprites.Container]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/resources/chest.png",
-        },
-        [Sprites.GoldShrine]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/resources/gold.png",
-        },
-        [Sprites.EscapePortal]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/resources/wood.png",
-        },
-        [Sprites.EmberCrown]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/resources/wood.png",
-        },
-        [Sprites.Donkey]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/workers/donkey.png",
-        },
-        [Sprites.Soldier]: {
-          assetKey: Assets.MainAtlas,
-          frame: "sprites/warriors/hero.png",
         },
       },
       animations: [],

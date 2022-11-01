@@ -1,0 +1,25 @@
+{
+  "components": ["Position", "Item"],
+  "state": [
+    {
+      "entity": 0,
+      "component": 0,
+      "value": { "x": 0, "y": 0 }
+    },
+    {
+      "entity": 0,
+      "component": 1,
+      "value": {"value": 1}
+    },
+    {
+      "entity": 1,
+      "component": 0,
+      "value": { "x": 1, "y": 0 }
+    },
+    {
+      "entity": 1,
+      "component": 1,
+      "value": {"value": 2} 
+    }
+  ]
+}

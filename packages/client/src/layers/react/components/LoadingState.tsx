@@ -1,9 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BootScreen, registerUIComponent } from "../engine";
 import { concat, map } from "rxjs";
-import { getComponentValue } from "@latticexyz/recs";
-import { GodID, SyncState } from "@latticexyz/network";
-
 export function registerLoadingState() {
   registerUIComponent(
     "LoadingState",
@@ -15,29 +12,25 @@ export function registerLoadingState() {
     },
     (layers) => {
       const {
-        components: { LoadingState },
         world,
       } = layers.network;
 
-      return concat([1], LoadingState.update$).pipe(
+      return concat([1]).pipe(
         map(() => ({
-          LoadingState,
           world,
         }))
       );
     },
 
-    ({ LoadingState, world }) => {
-      const GodEntityIndex = world.entityToIndex.get(GodID);
+    () => {
+      const [loading, setLoading] = useState(true);
 
-      const loadingState = GodEntityIndex == null ? null : getComponentValue(LoadingState, GodEntityIndex);
-      if (loadingState == null) {
-        return <BootScreen initialOpacity={1}>Connecting</BootScreen>;
-      }
+      // TODO: show the loading screen while we fetch the initial state from cloudflare
+      useEffect(() => {
+        setTimeout(() => setLoading(false), 100);
+      }, [])
 
-      if (loadingState.state !== SyncState.LIVE) {
-        return <BootScreen initialOpacity={1}>{loadingState.msg}</BootScreen>;
-      }
+      if(loading) return <BootScreen initialOpacity={1}>Connecting</BootScreen>;
 
       return null;
     }

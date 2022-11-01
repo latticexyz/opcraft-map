@@ -80,10 +80,10 @@ async function bootGame() {
     }
 
     // Start syncing once all systems have booted
-    if (initialBoot) {
-      initialBoot = false;
-      layers.network.startSync();
-    }
+    // if (initialBoot) {
+    //   initialBoot = false;
+    //   layers.network.startSync();
+    // }
 
     // Reboot react if layers have changed
     mountReact.current(true);
@@ -120,7 +120,7 @@ async function bootGame() {
       dispose("phaser");
       await rebootGame();
       console.log("HMR Network");
-      layers.network?.startSync();
+      // layers.network?.startSync();
       reloadingNetwork = false;
     });
 

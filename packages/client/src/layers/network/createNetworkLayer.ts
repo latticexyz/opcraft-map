@@ -1,10 +1,8 @@
 import { createWorld } from "@latticexyz/recs";
 import { setupDevSystems } from "./setup";
-import { createActionSystem, setupMUDNetwork } from "@latticexyz/std-client";
-import { defineLoadingStateComponent } from "./components";
-import { SystemTypes } from "contracts/types/SystemTypes";
-import { SystemAbis } from "contracts/types/SystemAbis.mjs";
-import { GameConfig, getNetworkConfig } from "./config";
+import { defineItemComponent, definePositionComponent, defineVoxelPositionComponent } from "./components";
+import { GameConfig } from "./config";
+import { createLoadingSystem } from "./systems";
 
 /**
  * The Network layer is the lowest layer in the client architecture.
@@ -18,33 +16,21 @@ export async function createNetworkLayer(config: GameConfig) {
 
   // --- COMPONENTS -----------------------------------------------------------------
   const components = {
-    LoadingState: defineLoadingStateComponent(world),
+    Item: defineItemComponent(world),
+    Position: definePositionComponent(world),
+    VoxelPosition: defineVoxelPositionComponent(world),
   };
-
-  // --- SETUP ----------------------------------------------------------------------
-  const { txQueue, systems, txReduced$, network, startSync, encoders } = await setupMUDNetwork<
-    typeof components,
-    SystemTypes
-  >(getNetworkConfig(config), world, components, SystemAbis);
-
-  // --- ACTION SYSTEM --------------------------------------------------------------
-  const actions = createActionSystem(world, txReduced$);
-
-  // --- API ------------------------------------------------------------------------
 
   // --- CONTEXT --------------------------------------------------------------------
   const context = {
     world,
     components,
-    txQueue,
-    systems,
-    txReduced$,
-    startSync,
-    network,
-    actions,
     api: {},
-    dev: setupDevSystems(world, encoders, systems),
+    dev: setupDevSystems(world),
   };
+
+  // --- SYSTEMS --------------------------------------------------------------------
+  createLoadingSystem(context);
 
   return context;
 }
